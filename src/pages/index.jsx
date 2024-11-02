@@ -1,4 +1,9 @@
 import React, { useState } from 'react';
+import concepts from "../assets/Concepts.png"
+import scripts from "../assets/scripts.png"
+import Procedural_PBR_Textures from "../assets/Procedural_PBR_Textures.png"
+import Low_Poly_Models from "../assets/Low_Poly_Models.png"
+import High_Poly from "../assets/High_Poly.png"
 
 const PortfolioHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -8,34 +13,31 @@ const PortfolioHero = () => {
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.",
       images: [
         {
-          src: '/api/placeholder/300/300',
+          src: concepts,
           description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.'
         },
         {
-          src: '/api/placeholder/300/400',
+          src: scripts,
           description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.'
         },
         {
-          src: '/api/placeholder/300/300',
+          src: Procedural_PBR_Textures,
           description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat.'
         }
       ]
     },
     {
-      description: "Second collection showcasing experimental light installations and spatial designs.",
+     
       images: [
         {
-          src: '/api/placeholder/300/300',
+          src: Low_Poly_Models,
           description: 'Second set - Image 1 description'
         },
         {
-          src: '/api/placeholder/300/400',
+          src: High_Poly,
           description: 'Second set - Image 2 description'
         },
-        {
-          src: '/api/placeholder/300/300',
-          description: 'Second set - Image 3 description'
-        }
+       
       ]
     },
     {
@@ -76,7 +78,7 @@ const PortfolioHero = () => {
           <h1 className="text-3xl sm:text-4xl font-bold tracking-wider mb-3 sm:mb-4">VYAN1 TOUM</h1>
           <h2 className="text-lg sm:text-xl tracking-widest text-gray-600 mb-6">LIGHT NEOLOGISM</h2>
           <p className="text-gray-700 max-w-2xl mx-auto text-base sm:text-lg leading-relaxed">
-            {slides[currentSlide].description}
+            {slides[1].description}
           </p>
         </div>
 
