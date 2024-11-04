@@ -11,8 +11,7 @@ const PortfolioHero = () => {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645677/Procedural_PBR_Textures_qvgcoc.png',
       topic: 'PBR Textures',
       headline: 'Procedural PBR Textures',
-      text: 'Easily adjustable and detailed textures were always something that fascinated me. And learning slowly about the beauty of PBR textures I have explored how to achieve nice results in Maya, but also in Substance Designer, while currently still trying to learn and expand on that knowledge.'
-    },
+      text: "Easily adjustable and detailed textures were always something that fascinated me. And learning slowly about the beauty of PBR textures I have explored how to achieve nice results in Maya, but also in Substance Designer, while currently still trying to learn and expand on that knowledge."    },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645673/High_Poly_rnbwfd.jpg',
       topic: 'High Poly Models',
@@ -23,8 +22,7 @@ const PortfolioHero = () => {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645658/Low_Poly_Models_uzifzx.png',
       topic: 'Low Poly Models',
       headline: 'Low Poly models with basic photo- or hand-textures',
-      text: 'I have created plenty low- and mid-poly models, from more stylized ones to ones that mimic reality. While not being the best at photo- or hand-painted textures, I also did learn to do so.'
-    },
+text: "I have created plenty low- and mid poly models, from more stylised ones to ones that mimic reality. While not being the best at photo- or hand painted textures, I also did learn to do those."     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730651316/Concepts_1_iexw99.png',
       isWidthBigger: true,
@@ -36,8 +34,7 @@ const PortfolioHero = () => {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645660/scripts_dedbwr.png',
       topic: 'Scripts',
       headline: 'Creating an easier work experience through scripts',
-      text: 'One of my focuses has been creating scripts to create easier work experiences and save time. Such as batch processing of huge data masses, transfer scripts from Substance Designer to Maya, etc. For that, I have learned how to use Python, as well as certain libraries such as the Maya Commands.'
-    }
+      text: "One of my focuses has been creating scripts to have easier work experiences and save time. Such as batch processing of huge data masses, transfer scripts from Substance Designer to Maya, etc. For that I have learned how to use python, as well as certain libraries such as the Maya Commands. "    }
     ,
     {
       url: procedural_houdini,
@@ -151,24 +148,24 @@ const PortfolioHero = () => {
         </div>
 
         {/* Gallery Section */}
-        <div className="w-full mb-12 sm:mb-16 md:mb-20">
+        <div className="w-full mb-12 sm:mb-16 md:mb-20 sm:mt-[10%] md:mt-0 ">
           {/* Desktop Layout */}
           <div className="hidden md:block relative">
             <div className="max-w-7xl mx-auto relative h-[40vh] lg:h-[60vh] xl:h-[70vh]">
             <div className="absolute inset-0 flex justify-center items-center">
       {/* Previous Media */}
-      <div className="absolute right-1/2 md:-translate-x-[40%] lg:-translate-x-[20%] -translate-x-[20%] z-10 transition-all duration-300">
+      <div className="absolute right-1/2 md:-translate-x-[40%] lg:-translate-x-[20%]  md:-translate-y-[15%]  -translate-x-[20%] z-10 transition-all duration-300">
         <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
           {!prev.isVideo ? (
             <img
               src={getOptimizedUrl(prev.url, { width: 600, height: 450, blur: true, quality: 60 })}
               alt="Previous image"
-              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+              className="w-full h-full blur-[2px]  opacity-80 transition-all duration-500"
             />
           ) : (
             <video 
               src={prev.url} 
-              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+              className="w-full h-full blur-[2px] object-fill opacity-80 transition-all duration-500"
               muted
               playsInline
             ></video>
@@ -177,12 +174,12 @@ const PortfolioHero = () => {
       </div>
 
       {/* Current Media */}
-      <div className="absolute left-1/2 -translate-x-1/2 z-20 transition-all duration-300">
+      <div className="absolute left-1/2 -translate-x-1/2  z-20 transition-all duration-300">
         <h2 className="text-base sm:text-lg md:text-xl text-center tracking-widest text-gray-600 mb-2 sm:mb-2">
           {current.topic}
         </h2>
         <div className={`h-[40vh] lg:h-[50vh] bg-black/5 rounded-lg shadow-xl overflow-hidden mb-4
-          ${current.isWidthBigger ? "w-[80vw] lg:w-[60vw]" : "w-[80vw] lg:w-[50vw] xl:w-[40vw]"}`}>
+          ${current.isWidthBigger ? "w-[80vw] lg:w-[60vw]" : "w-[80vw] lg:w-[50vw] lg:h-[45vh] xl:w-[40vw]"}`}>
           {!current.isVideo ? (
             <img
               src={getOptimizedUrl(current.url, { width: 1200, height: 500, quality: 100 })}
@@ -193,7 +190,7 @@ const PortfolioHero = () => {
             <video 
               src={current.url} 
               controls 
-              className="w-full h-full object-contain"
+              className="w-full object-fill h-full "
             ></video>
           )}
         </div>
@@ -206,7 +203,7 @@ const PortfolioHero = () => {
       </div>
 
       {/* Next Media */}
-      <div className="absolute left-1/2 md:translate-x-[40%] lg:translate-x-[20%] translate-x-[20%] z-10 transition-all duration-300">
+      <div className="absolute left-1/2 md:translate-x-[40%] lg:translate-x-[20%] md:-translate-y-[15%]  translate-x-[20%] z-10 transition-all duration-300">
         <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
           {!next.isVideo ? (
             <img
