@@ -1,33 +1,53 @@
 import { useState, useEffect, useCallback } from 'react';
-
+import procedural_houdini from "../assets/Procedural_Houdini.mp4"
 const PortfolioHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState(new Set());
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const allImages = [
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645677/Procedural_PBR_Textures_qvgcoc.png',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      topic: 'PBR Textures',
+      headline: 'Procedural PBR Textures',
+      text: 'Easily adjustable and detailed textures were always something that fascinated me. And learning slowly about the beauty of PBR textures I have explored how to achieve nice results in Maya, but also in Substance Designer, while currently still trying to learn and expand on that knowledge.'
     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645673/High_Poly_rnbwfd.jpg',
-      description: 'Ut enim ad minim veniam, quis nostrud exercitation.'
+      topic: 'High Poly Models',
+      headline: 'High Poly models with PBR Materials using SubD techniques.',
+      text: 'With a love for detail I love using the possibilities that high poly modelling allows.'
     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645658/Low_Poly_Models_uzifzx.png',
-      description: 'Duis aute irure dolor in reprehenderit.'
+      topic: 'Low Poly Models',
+      headline: 'Low Poly models with basic photo- or hand-textures',
+      text: 'I have created plenty low- and mid-poly models, from more stylized ones to ones that mimic reality. While not being the best at photo- or hand-painted textures, I also did learn to do so.'
     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730651316/Concepts_1_iexw99.png',
-      description: 'Excepteur sint occaecat cupidatat non proident.',
-      isWidthBigger: true
+      isWidthBigger: true,
+      topic: 'Concepts',
+      headline: 'Creating basic concepts based on the given guidelines',
+      text: 'Whilst not a full-blown concept artist I can create basic concept art to explore the customer\'s ideas.'
     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645660/scripts_dedbwr.png',
-      description: 'Sed ut perspiciatis unde omnis iste natus error.'
+      topic: 'Scripts',
+      headline: 'Creating an easier work experience through scripts',
+      text: 'One of my focuses has been creating scripts to create easier work experiences and save time. Such as batch processing of huge data masses, transfer scripts from Substance Designer to Maya, etc. For that, I have learned how to use Python, as well as certain libraries such as the Maya Commands.'
+    }
+    ,
+    {
+      url: procedural_houdini,
+      topic: 'Scripts',
+      isVideo:true,
+      headline: 'Creating an easier work experience through scripts',
+      text: 'One of my focuses has been creating scripts to create easier work experiences and save time. Such as batch processing of huge data masses, transfer scripts from Substance Designer to Maya, etc. For that, I have learned how to use Python, as well as certain libraries such as the Maya Commands.'
     }
   ];
+  
 
   useEffect(() => {
     const handleResize = () => {
@@ -128,8 +148,7 @@ const PortfolioHero = () => {
               />
             </svg>
           </div>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider mb-2 sm:mb-3">VYAN1 TOUM</h1>
-          <h2 className="text-base sm:text-lg md:text-xl tracking-widest text-gray-600 mb-4 sm:mb-6">LIGHT NEOLOGISM</h2>
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-wider text-black mb-2 sm:mb-3">Franziska Frieling</h1>
         </div>
 
         {/* Gallery Section */}
@@ -137,44 +156,76 @@ const PortfolioHero = () => {
           {/* Desktop Layout */}
           <div className="hidden md:block relative">
             <div className="max-w-7xl mx-auto relative h-[40vh] lg:h-[60vh] xl:h-[70vh]">
-              <div className="absolute inset-0 flex justify-center items-center">
-                {/* Previous Image */}
-                <div className="absolute right-1/2 md:-translate-x-[40%] lg:-translate-x-[20%] -translate-x-[20%]-translate-x-[20%] z-10 transition-all duration-300">
-                  <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
-                    <img
-                      src={getOptimizedUrl(prev.url, { width: 600, height: 450, blur: true, quality: 60 })}
-                      alt="Previous image"
-                      className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
-                    />
-                  </div>
-                </div>
+            <div className="absolute inset-0 flex justify-center items-center">
+      {/* Previous Media */}
+      <div className="absolute right-1/2 md:-translate-x-[40%] lg:-translate-x-[20%] -translate-x-[20%] z-10 transition-all duration-300">
+        <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
+          {!prev.isVideo ? (
+            <img
+              src={getOptimizedUrl(prev.url, { width: 600, height: 450, blur: true, quality: 60 })}
+              alt="Previous image"
+              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+            />
+          ) : (
+            <video 
+              src={prev.url} 
+              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+              muted
+              playsInline
+            ></video>
+          )}
+        </div>
+      </div>
 
-                {/* Current Image */}
-                <div className="absolute left-1/2 -translate-x-1/2 z-20 transition-all duration-300">
-                  <div className={`h-[40vh] lg:h-[50vh] bg-black/5 rounded-lg shadow-xl overflow-hidden mb-4 
-                    ${current.isWidthBigger ? "w-[80vw] lg:w-[60vw]" : "w-[80vw] lg:w-[50vw] xl:w-[40vw]"}`}>
-                    <img
-                      src={getOptimizedUrl(current.url, { width: 1200, height: 500, quality: 100 })}
-                      alt="Current image"
-                      className="w-full h-full transition-all duration-500"
-                    />
-                  </div>
-                  <p className="text-gray-600 text-sm text-center max-w-xs mx-auto leading-relaxed px-4">
-                    {current.description}
-                  </p>
-                </div>
+      {/* Current Media */}
+      <div className="absolute left-1/2 -translate-x-1/2 z-20 transition-all duration-300">
+        <h2 className="text-base sm:text-lg md:text-xl text-center tracking-widest text-gray-600 mb-2 sm:mb-2">
+          {current.topic}
+        </h2>
+        <div className={`h-[40vh] lg:h-[50vh] bg-black/5 rounded-lg shadow-xl overflow-hidden mb-4
+          ${current.isWidthBigger ? "w-[80vw] lg:w-[60vw]" : "w-[80vw] lg:w-[50vw] xl:w-[40vw]"}`}>
+          {!current.isVideo ? (
+            <img
+              src={getOptimizedUrl(current.url, { width: 1200, height: 500, quality: 100 })}
+              alt="Current image"
+              className="w-full h-full transition-all duration-500"
+            />
+          ) : (
+            <video 
+              src={current.url} 
+              controls 
+              className="w-full h-full object-contain"
+            ></video>
+          )}
+        </div>
+        <p className="text-gray-600 font-bold text-base text-center max-w-3xl mx-auto leading-relaxed px-4">
+          {current.headline}
+        </p>
+        <p className="text-gray-600 text-base text-center max-w-3xl mx-auto leading-relaxed px-4">
+          {current.text}
+        </p>
+      </div>
 
-                {/* Next Image */}
-                <div className="absolute left-1/2 md:translate-x-[40%] lg:translate-x-[20%] translate-x-[20%] z-10 transition-all duration-300">
-                  <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
-                    <img
-                      src={getOptimizedUrl(next.url, { width: 600, height: 450, blur: true, quality: 60 })}
-                      alt="Next image"
-                      className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
-                    />
-                  </div>
-                </div>
-              </div>
+      {/* Next Media */}
+      <div className="absolute left-1/2 md:translate-x-[40%] lg:translate-x-[20%] translate-x-[20%] z-10 transition-all duration-300">
+        <div className="w-[30vw] h-[35vh] overflow-hidden rounded-lg shadow-lg mb-4">
+          {!next.isVideo ? (
+            <img
+              src={getOptimizedUrl(next.url, { width: 600, height: 450, blur: true, quality: 60 })}
+              alt="Next image"
+              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+            />
+          ) : (
+            <video 
+              src={next.url} 
+              className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
+              muted
+              playsInline
+            ></video>
+          )}
+        </div>
+      </div>
+    </div>
             </div>
 
             {/* Desktop Navigation Arrows */}
@@ -200,14 +251,21 @@ const PortfolioHero = () => {
           <div className="md:hidden">
             <div className="flex flex-col items-center my-auto">
               <div className="w-[85vw] sm:w-[70vw] h-[40vh] sm:h-[60vh] bg-black/5 rounded-lg shadow-lg overflow-hidden mb-4">
-                <img
-                  src={getOptimizedUrl(current.url, { width: 600, height: 400, quality: 100 })}
-                  alt="Gallery image"
-                  className="w-full h-full"
-                />
+              {!current.isVideo? (
+                  <img
+                    src={getOptimizedUrl(current.url, { width: 600, height: 400, quality: 100 })}
+                    alt="Gallery image"
+                    className="w-full h-full"
+                  />
+                ):(
+                  <video src={current.url} controls className="w-full h-full object-contain"></video>
+                )}
               </div>
               <p className="text-gray-600 text-sm text-center max-w-[85vw] sm:max-w-[80vw] leading-relaxed px-4">
-                {current.description}
+                {current.headline}
+              </p>
+              <p className="text-gray-600 text-sm text-center max-w-[85vw] sm:max-w-[80vw] leading-relaxed px-4">
+                {current.text}
               </p>
               
               {/* Mobile Navigation Arrows */}
