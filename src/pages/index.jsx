@@ -41,11 +41,10 @@ const PortfolioHero = () => {
     ,
     {
       url: procedural_houdini,
-      topic: 'Scripts',
+      topic: 'Proceduralism',
       isVideo:true,
-      headline: 'Creating an easier work experience through scripts',
-      text: 'One of my focuses has been creating scripts to create easier work experiences and save time. Such as batch processing of huge data masses, transfer scripts from Substance Designer to Maya, etc. For that, I have learned how to use Python, as well as certain libraries such as the Maya Commands.'
-    }
+      headline: "Creating easily adjustable tools for often created models",
+      text: "Creating similar models over and over again can be quite tedious, therefore Houdini's possibility of creating easily adjustable or even randomised automatic generated models is something I personally found astonishing. From cars, buildings, landscapes, trees, I personally greatly enjoy creating uniqueness with automation."    }
   ];
   
 
