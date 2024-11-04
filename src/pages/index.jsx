@@ -1,18 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const PortfolioHero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  const [preloadedImages, setPreloadedImages] = useState(new Set());
 
   const allImages = [
     {
@@ -38,18 +29,17 @@ const PortfolioHero = () => {
     }
   ];
 
-  const getAdjacentImages = (currentIndex) => {
-    const prevIndex = currentIndex === 0 ? allImages.length - 1 : currentIndex - 1;
-    const nextIndex = currentIndex === allImages.length - 1 ? 0 : currentIndex + 1;
-    
-    return {
-      prev: allImages[prevIndex],
-      current: allImages[currentIndex],
-      next: allImages[nextIndex]
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
     };
-  };
+    
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-  const getOptimizedUrl = (baseUrl, options = {}) => {
+  const getOptimizedUrl = useCallback((baseUrl, options = {}) => {
     const {
       width = 1300,
       height = 600,
@@ -64,18 +54,67 @@ const PortfolioHero = () => {
 
     const urlParts = baseUrl.split('/upload/');
     return `${urlParts[0]}/upload/${transformations}/${urlParts[1]}`;
-  };
+  }, []);
+
+  // Preload next and previous images
+  useEffect(() => {
+    const preloadImages = () => {
+      const nextIndex = (currentSlide + 1) % allImages.length;
+      const prevIndex = currentSlide === 0 ? allImages.length - 1 : currentSlide - 1;
+
+      [prevIndex, currentSlide, nextIndex].forEach(index => {
+        const imageUrl = allImages[index].url;
+        if (!preloadedImages.has(imageUrl)) {
+          const img = new Image();
+          img.src = getOptimizedUrl(imageUrl, { 
+            width: 1200, 
+            height: 500, 
+            quality: 100 
+          });
+          img.onload = () => {
+            setPreloadedImages(prev => new Set([...prev, imageUrl]));
+          };
+
+          // Also preload the blurred version for side images
+          if (index !== currentSlide) {
+            const blurredImg = new Image();
+            blurredImg.src = getOptimizedUrl(imageUrl, { 
+              width: 600, 
+              height: 450, 
+              blur: true, 
+              quality: 60 
+            });
+          }
+        }
+      });
+    };
+
+    preloadImages();
+  }, [currentSlide, allImages, getOptimizedUrl, preloadedImages]);
+
+  const getAdjacentImages = useCallback((currentIndex) => {
+    const prevIndex = currentIndex === 0 ? allImages.length - 1 : currentIndex - 1;
+    const nextIndex = currentIndex === allImages.length - 1 ? 0 : currentIndex + 1;
+    
+    return {
+      prev: allImages[prevIndex],
+      current: allImages[currentIndex],
+      next: allImages[nextIndex]
+    };
+  }, [allImages]);
+
+  const handleSwipe = useCallback((direction) => {
+    setCurrentSlide(current => {
+      if (direction === 'left') {
+        return current === allImages.length - 1 ? 0 : current + 1;
+      }
+      return current === 0 ? allImages.length - 1 : current - 1;
+    });
+  }, [allImages.length]);
 
   const { prev, current, next } = getAdjacentImages(currentSlide);
 
-  const handleSwipe = (direction) => {
-    if (direction === 'left') {
-      setCurrentSlide(currentSlide === allImages.length - 1 ? 0 : currentSlide + 1);
-    } else {
-      setCurrentSlide(currentSlide === 0 ? allImages.length - 1 : currentSlide - 1);
-    }
-  };
-
+  // Your existing JSX remains exactly the same
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col relative">
       <div className="flex-1 flex flex-col items-center pt-4 sm:pt-8 md:pt-16 px-2 sm:px-4 md:px-6">
@@ -108,7 +147,6 @@ const PortfolioHero = () => {
                       className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
                     />
                   </div>
-                
                 </div>
 
                 {/* Current Image */}
@@ -118,7 +156,7 @@ const PortfolioHero = () => {
                     <img
                       src={getOptimizedUrl(current.url, { width: 1200, height: 500, quality: 100 })}
                       alt="Current image"
-                      className="w-full h-full  transition-all duration-500"
+                      className="w-full h-full transition-all duration-500"
                     />
                   </div>
                   <p className="text-gray-600 text-sm text-center max-w-xs mx-auto leading-relaxed px-4">
@@ -135,7 +173,6 @@ const PortfolioHero = () => {
                       className="w-full h-full blur-[2px] object-cover opacity-80 transition-all duration-500"
                     />
                   </div>
-               
                 </div>
               </div>
             </div>
@@ -162,11 +199,11 @@ const PortfolioHero = () => {
           {/* Mobile Layout */}
           <div className="md:hidden">
             <div className="flex flex-col items-center my-auto">
-              <div className="w-[85vw] sm:w-[70vw] h-[40vh] sm:h-[60vh] bg-black/5  rounded-lg shadow-lg overflow-hidden mb-4">
+              <div className="w-[85vw] sm:w-[70vw] h-[40vh] sm:h-[60vh] bg-black/5 rounded-lg shadow-lg overflow-hidden mb-4">
                 <img
                   src={getOptimizedUrl(current.url, { width: 600, height: 400, quality: 100 })}
                   alt="Gallery image"
-                  className="w-full h-full "
+                  className="w-full h-full"
                 />
               </div>
               <p className="text-gray-600 text-sm text-center max-w-[85vw] sm:max-w-[80vw] leading-relaxed px-4">
