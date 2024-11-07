@@ -16,7 +16,7 @@ const PortfolioHero = () => {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645673/High_Poly_rnbwfd.jpg',
       topic: 'High Poly Models',
       headline: 'High Poly models with PBR Materials using SubD techniques.',
-      text: 'With a love for detail I love using the possibilities that high poly modelling allows.'
+      text:"With a love for detail I enjoy using the possibilities that high poly modelling allows." 
     },
     {
       url: 'https://res.cloudinary.com/dkgzqkiot/image/upload/v1730645658/Low_Poly_Models_uzifzx.png',
